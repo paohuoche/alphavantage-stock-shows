@@ -19,13 +19,16 @@ const App = ({ Component, pageProps }: AppProps) => {
   })
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ConfigProvider>
-        <StoreProvider>
-          <Component {...pageProps} />
-        </StoreProvider>
-      </ConfigProvider>
-    </QueryClientProvider>
+    <>
+      <title>Alpha Vantage Stock Data Display</title>
+      <QueryClientProvider client={queryClient}>
+        <ConfigProvider>
+          <StoreProvider>
+            <Component {...pageProps} />
+          </StoreProvider>
+        </ConfigProvider>
+      </QueryClientProvider>
+    </>
   )
 }
 

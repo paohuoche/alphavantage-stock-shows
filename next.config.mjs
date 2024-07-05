@@ -10,6 +10,9 @@ const nextConfig = {
       },
     ]
   },
+  env: {
+    api_key: process.env.API_KEY,
+  },
 }
 
 export default nextConfig

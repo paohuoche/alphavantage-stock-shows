@@ -22,9 +22,6 @@ type GetStockDataParams = {
   interval?: EInterval
 }
 
-const API_KEY = "demo" // 4SG88F2EBUNLZB9R
-// const API_KEY = "RIBXT3XYLI69PC0Q" // 4SG88F2EBUNLZB9R
-
 /**
  * Get stock data
  */
@@ -33,7 +30,7 @@ export const getStockData = (params: GetStockDataParams) => {
     get("https://www.alphavantage.co/query", {
       // get("http://127.0.0.1:4010/query", {
       ...params,
-      apikey: API_KEY,
+      apikey: process.env.api_key,
     }).then((res) => jsonResponseHandler<GetStockDataResponse>(res)),
   )
 }
@@ -75,7 +72,7 @@ export const getEndpoint = (params: { keywords: string }) => {
     get("https://www.alphavantage.co/query", {
       function: "SYMBOL_SEARCH",
       keywords: params.keywords,
-      apikey: API_KEY,
+      apikey: process.env.api_key,
     }).then((res) => jsonResponseHandler<EndPointResponse>(res)),
   )
 }

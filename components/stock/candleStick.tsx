@@ -13,7 +13,7 @@ import {
   getStockData,
 } from "@/lib/api"
 
-import MockData from "./mockData"
+// import MockData from "./mockData"
 
 const CandleStick = observer(() => {
   const store = useStore()
@@ -52,7 +52,7 @@ const CandleStick = observer(() => {
       key = `Time Series (${store.interval})`
     }
 
-    const stockData = (MockData as GetStockDataResponse)[key] as Record<
+    const stockData = (rawData as GetStockDataResponse)[key] as Record<
       string,
       StockDataItem
     >
@@ -88,9 +88,10 @@ const CandleStick = observer(() => {
     },
   }
 
+  console.log("fff")
+
   return (
     <ReactApexChart
-      title={"undefined"}
       options={options}
       series={series}
       type="candlestick"
