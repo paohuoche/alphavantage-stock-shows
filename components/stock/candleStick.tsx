@@ -13,8 +13,6 @@ import {
   getStockData,
 } from "@/lib/api"
 
-// import MockData from "./mockData"
-
 const CandleStick = observer(() => {
   const store = useStore()
   const fn = store.function
@@ -28,11 +26,12 @@ const CandleStick = observer(() => {
       getStockData({
         function: fn,
         symbol,
+        interval,
       }),
   })
 
-  const series = useMemo(() => {
-    if (!rawData) return []
+  const { series } = useMemo(() => {
+    if (!rawData) return { series: [] }
 
     if (rawData["Information"]) {
       notification.warning({
@@ -40,7 +39,7 @@ const CandleStick = observer(() => {
         description: rawData["Information"],
         key: "reach-limit",
       })
-      return
+      return { series: [] }
     }
 
     let key = "Time Series (Daily)" as keyof typeof rawData
@@ -59,8 +58,8 @@ const CandleStick = observer(() => {
 
     let data = []
     for (let date in stockData) {
-      data.push({
-        x: new Date(date),
+      data.unshift({
+        x: date,
         y: [
           parseFloat(stockData[date]["1. open"]),
           parseFloat(stockData[date]["2. high"]),
@@ -70,7 +69,9 @@ const CandleStick = observer(() => {
       })
     }
 
-    return [{ data }]
+    return {
+      series: [{ data }],
+    }
   }, [rawData])
 
   const options: ApexCharts.ApexOptions = {
@@ -79,7 +80,7 @@ const CandleStick = observer(() => {
       height: 350,
     },
     xaxis: {
-      type: "datetime",
+      type: "category",
     },
     yaxis: {
       tooltip: {
@@ -87,8 +88,6 @@ const CandleStick = observer(() => {
       },
     },
   }
-
-  console.log("fff")
 
   return (
     <ReactApexChart
