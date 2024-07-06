@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite"
 import React, { useMemo } from "react"
 import ReactApexChart from "react-apexcharts"
 
-import { notification } from "antd"
+import { Spin, notification } from "antd"
 
 import {
   ETimeSeriesFunction,
@@ -90,13 +90,22 @@ const CandleStick = observer(() => {
   }
 
   return (
-    <ReactApexChart
-      options={options}
-      series={series}
-      type="candlestick"
-      height={350}
-      width={"100%"}
-    />
+    <div className="relative">
+      {isStockDataLoading && (
+        <div className="absolute left-0 right-0 top-0 h-[350px]">
+          <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center bg-black bg-opacity-5">
+            <Spin />
+          </div>
+        </div>
+      )}
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="candlestick"
+        height={350}
+        width={"100%"}
+      />
+    </div>
   )
 })
 
